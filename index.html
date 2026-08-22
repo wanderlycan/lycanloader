@@ -271,22 +271,53 @@
             document.getElementById('btn-' + p).classList.add('active');
         }
 
-        function generateScript() {
-            const url = document.getElementById('videoUrl').value.trim() || '[LINK-DO-VÍDEO]';
-            const codeElem = document.getElementById('scriptCode');
-            let code = "";
-
-            if (currentPlatform === 'win') {
-                code = `@echo off\necho Verificando dependencias...\nwhere yt-dlp >nul 2>nul\nif %errorlevel% neq 0 ( winget install yt-dlp --accept-source-agreements )\nwhere ffmpeg >nul 2>nul\nif %errorlevel% neq 0 ( winget install ffmpeg --accept-source-agreements )\nyt-dlp "${url}"\npause`;
-            } else if (currentPlatform === 'lin') {
-                code = `#!/bin/bash\nsudo apt update && sudo apt install yt-dlp ffmpeg -y\nyt-dlp "${url}"`;
-            } else {
-                code = `Use o App Mobile ou no Termux rode:\npkg install python ffmpeg -y && pip install yt-dlp\nyt-dlp "${url}"`;
-            }
-
-            codeElem.innerText = code;
-            document.getElementById('scriptResult').style.display = 'block';
-        }
+function generateScript() {
+    const url = document.getElementById('videoUrl').value.trim() || 'https://www.youtube.com/watch?v=mDFBTdToRmw';
+    const codeElem = document.getElementById('scriptCode');
+    let code = "";
+    
+    if (currentPlatform === 'win') {
+        code = `@echo off\n` +
+               `setlocal\n` +
+               `chcp 65001 >nul\n` +
+               `title YT-DLP Mobile Web - Setup e Download\n\n` +
+               `echo [INFO] Verificando dependencias no sistema...\n\n` +
+               `:: Verifica o yt-dlp e atualiza se ja existir\n` +
+               `where yt-dlp >nul 2>nul\n` +
+               `if %errorlevel% neq 0 (\n` +
+               `    echo [AVISO] yt-dlp nao encontrado. Instalando via winget...\n` +
+               `    winget install yt-dlp --accept-source-agreements --accept-package-agreements\n` +
+               `) else (\n` +
+               `    echo [INFO] yt-dlp ja instalado. Verificando atualizacoes...\n` +
+               `    yt-dlp -U\n` +
+               `)\n\n` +
+               `:: Verifica o ffmpeg\n` +
+               `where ffmpeg >nul 2>nul\n` +
+               `if %errorlevel% neq 0 (\n` +
+               `    echo [AVISO] ffmpeg nao encontrado. Instalando via winget...\n` +
+               `    winget install ffmpeg --accept-source-agreements --accept-package-agreements\n` +
+               `)\n\n` +
+               `echo.\n` +
+               `echo [INFO] Iniciando o download...\n` +
+               `yt-dlp "${url}"\n\n` +
+               `echo.\n` +
+               `echo ========================================================\n` +
+               `echo   Processo finalizado com sucesso! Pressione para sair.\n` +
+               `echo ========================================================\n` +
+               `pause >nul`;
+    } else if (currentPlatform === 'lin') {
+        code = `#!/bin/bash\n` +
+               `sudo apt update && sudo apt install yt-dlp ffmpeg -y\n` +
+               `yt-dlp "${url}"`;
+    } else {
+        code = `Use o App Mobile ou no Termux rode:\n` +
+               `pkg install python ffmpeg -y && pip install yt-dlp\n` +
+               `yt-dlp "${url}"`;
+    }
+    
+    codeElem.innerText = code;
+    document.getElementById('scriptResult').style.display = 'block';
+}
 
         function downloadFile() {
             const code = document.getElementById('scriptCode').innerText;
