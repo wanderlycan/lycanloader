@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YT-DLP Mobile Web</title>
+    <style>
+        :root {
+            --primary: #BB86FC;
+            --secondary: #03DAC6;
+            --background: #0F0F0F;
+            --surface: #1E1E1E;
+            --on-surface: #E1E1E6;
+            --gold: #FFD700;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--on-surface);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* LOGO STYLE */
+        .logo-container {
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        .logo-cloud {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        /* CARD STYLE */
+        .card {
+            background-color: var(--surface);
+            border-radius: 28px;
+            padding: 24px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        h1 { font-size: 28px; font-weight: 800; margin-bottom: 5px; text-align: center; }
+        p.subtitle { color: #888; font-size: 14px; margin-bottom: 25px; text-align: center; }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            background: transparent;
+            border: 2px solid #333;
+            border-radius: 16px;
+            color: white;
+            box-sizing: border-box;
+            font-size: 16px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .platform-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        .platform-btn {
+            padding: 10px 20px;
+            border-radius: 12px;
+            border: none;
+            background: #333;
+            color: #AAA;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .platform-btn.active {
+            background: var(--primary);
+            color: black;
+        }
+
+        .main-btn {
+            width: 100%;
+            padding: 18px;
+            border-radius: 16px;
+            border: none;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: black;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .main-btn:hover { opacity: 0.9; transform: scale(0.98); }
+
+        /* SCRIPT BOX */
+        .script-box {
+            margin-top: 25px;
+            background: #000;
+            border-radius: 16px;
+            padding: 20px;
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--secondary);
+            font-size: 13px;
+            display: block;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .warning-box {
+            background: #332200;
+            color: #FFCC00;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 12px;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pix-box {
+            background: rgba(0,0,0,0.3);
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            border: 1px dashed var(--gold);
+            margin-top: 15px;
+            transition: background 0.3s;
+        }
+
+        .pix-box:hover { background: rgba(255,215,0,0.1); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="logo-container">
+            <div class="logo-cloud">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="black">
+                    <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 4.5-2.24 4.5-5 0-2.64-2.14-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/>
+                </svg>
+            </div>
+            <h1>YT-DLP Mobile Web</h1>
+            <p class="subtitle">Prepare seu download em qualquer lugar</p>
+        </div>
+
+        <div class="card">
+            <input type="text" id="videoUrl" placeholder="Cole o link do vídeo aqui...">
+
+            <div class="platform-selector">
+                <button class="platform-btn" onclick="setPlatform('win')" id="btn-win">Windows</button>
+                <button class="platform-btn" onclick="setPlatform('lin')" id="btn-lin">Linux</button>
+                <button class="platform-btn" onclick="setPlatform('and')" id="btn-and">Android</button>
+            </div>
+
+            <button class="main-btn" onclick="generateScript()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z"/></svg>
+                Gerar Guia de Instalação
+            </button>
+
+            <div id="scriptResult" class="script-box">
+                <p style="margin-top:0; font-size: 14px; font-weight: bold; color: var(--secondary);">🛠️ Setup e Download</p>
+
+                <div style="position: relative;">
+                    <code id="scriptCode"></code>
+                    <button onclick="copyScript()" style="position: absolute; top: 0; right: 0; background: var(--surface); border: 1px solid #444; color: var(--secondary); padding: 5px 10px; border-radius: 8px; cursor: pointer; font-size: 10px;">Copiar</button>
+                </div>
+
+                <button class="main-btn" style="margin-top:15px; font-size: 14px; padding: 12px;" onclick="downloadFile()">
+                    Baixar Arquivo .bat / .sh
+                </button>
+
+                <div class="warning-box">
+                    <span>🛡️</span>
+                    <span><b>Dica:</b> Se o Windows bloquear, clique em "Copiar", abra o Bloco de Notas, cole e salve como <code>baixar.bat</code>.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEÇÃO DOWNLOAD DO APP -->
+        <div class="card" style="border: 2px solid var(--primary); background: linear-gradient(180deg, #1e1e1e 0%, #121212 100%);">
+            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--primary)">
+                    <path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/>
+                </svg>
+                <h2 style="margin: 0; font-size: 20px;">Versão Mobile Disponível!</h2>
+            </div>
+            <p style="font-size: 14px; color: #AAA; margin-bottom: 20px;">Baixe vídeos diretamente no celular com um toque.</p>
+            <a href="app-release.apk" style="text-decoration: none;">
+                <button class="main-btn">Baixar APK Oficial</button>
+            </a>
+        </div>
+
+        <!-- SEÇÃO DOAÇÃO (PROFESSOR GIRAFALES) -->
+        <div class="card" style="border: 1px solid rgba(255,215,0,0.3); text-align: center;">
+            <p style="font-size: 24px; margin: 0;">☕</p>
+            <h2 style="margin: 10px 0; font-size: 18px; color: var(--gold);">Pagar uma xícara de café?</h2>
+            <p style="font-size: 13px; color: #AAA; font-style: italic;">"Não seria muita incomodação?"</p>
+            <p style="font-size: 13px; color: #CCC; line-height: 1.5; margin-top: 10px;">
+                Se este projeto te ajudou, sinta-se à vontade para apoiar com qualquer valor. <b>Seria uma honra!</b>
+            </p>
+
+            <div class="pix-box" onclick="copyPix()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--gold)">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 7h2v2h-2V7zm0 4h2v6h-2v-6z"/>
+                </svg>
+                <span style="font-weight: bold; font-family: monospace; letter-spacing: 1px;">16996804236</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="#666"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+            </div>
+            <p style="font-size: 10px; color: #666; margin-top: 8px;">Clique acima para copiar a chave PIX</p>
+        </div>
+
+        <div style="margin-top: 40px; color: #444; font-size: 12px; text-align: center;">
+            <p>&copy; 2026 YT-DLP Mobile - Projeto Educativo</p>
+        </div>
+    </div>
+
+    <script>
+        let currentPlatform = 'win';
+
+        window.onload = () => {
+            const ua = navigator.userAgent.toLowerCase();
+            if (ua.includes('android')) setPlatform('and');
+            else if (ua.includes('linux')) setPlatform('lin');
+            else setPlatform('win');
+        };
+
+        function setPlatform(p) {
+            currentPlatform = p;
+            document.querySelectorAll('.platform-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('btn-' + p).classList.add('active');
+        }
+
+        function generateScript() {
+            const url = document.getElementById('videoUrl').value.trim() || '[LINK-DO-VÍDEO]';
+            const codeElem = document.getElementById('scriptCode');
+            let code = "";
+
+            if (currentPlatform === 'win') {
+                code = `@echo off\necho Verificando dependencias...\nwhere yt-dlp >nul 2>nul\nif %errorlevel% neq 0 ( winget install yt-dlp --accept-source-agreements )\nwhere ffmpeg >nul 2>nul\nif %errorlevel% neq 0 ( winget install ffmpeg --accept-source-agreements )\nyt-dlp "${url}"\npause`;
+            } else if (currentPlatform === 'lin') {
+                code = `#!/bin/bash\nsudo apt update && sudo apt install yt-dlp ffmpeg -y\nyt-dlp "${url}"`;
+            } else {
+                code = `Use o App Mobile ou no Termux rode:\npkg install python ffmpeg -y && pip install yt-dlp\nyt-dlp "${url}"`;
+            }
+
+            codeElem.innerText = code;
+            document.getElementById('scriptResult').style.display = 'block';
+        }
+
+        function downloadFile() {
+            const code = document.getElementById('scriptCode').innerText;
+            const blob = new Blob([code], {type: 'text/plain'});
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = currentPlatform === 'win' ? 'baixar.bat' : 'baixar.sh';
+            link.click();
+        }
+
+        function copyScript() {
+            navigator.clipboard.writeText(document.getElementById('scriptCode').innerText);
+            alert("Código do script copiado!");
+        }
+
+        function copyPix() {
+            navigator.clipboard.writeText("16996804236");
+            alert("Chave PIX copiada! Muito obrigado pela honra! ☕🙏");
+        }
+    </script>
+</body>
+</html>
