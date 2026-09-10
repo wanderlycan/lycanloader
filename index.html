@@ -1,357 +1,121 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<!doctype html>
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YT-DLP Mobile Web</title>
-    <style>
-        :root {
-            --primary: #BB86FC;
-            --secondary: #03DAC6;
-            --background: #0F0F0F;
-            --surface: #1E1E1E;
-            --on-surface: #E1E1E6;
-            --gold: #FFD700;
-        }
-
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--background);
-            color: var(--on-surface);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 600px;
-            width: 100%;
-            text-align: center;
-        }
-
-        /* LOGO STYLE */
-        .logo-container {
-            margin-top: 40px;
-            margin-bottom: 20px;
-        }
-
-        .logo-cloud {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 auto;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-        }
-
-        /* CARD STYLE */
-        .card {
-            background-color: var(--surface);
-            border-radius: 28px;
-            padding: 24px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-            margin-top: 30px;
-            text-align: left;
-        }
-
-        h1 { font-size: 28px; font-weight: 800; margin-bottom: 5px; text-align: center; }
-        p.subtitle { color: #888; font-size: 14px; margin-bottom: 25px; text-align: center; }
-
-        input {
-            width: 100%;
-            padding: 15px;
-            background: transparent;
-            border: 2px solid #333;
-            border-radius: 16px;
-            color: white;
-            box-sizing: border-box;
-            font-size: 16px;
-            margin-bottom: 20px;
-            transition: border-color 0.3s;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        .platform-selector {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            justify-content: center;
-        }
-
-        .platform-btn {
-            padding: 10px 20px;
-            border-radius: 12px;
-            border: none;
-            background: #333;
-            color: #AAA;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-
-        .platform-btn.active {
-            background: var(--primary);
-            color: black;
-        }
-
-        .main-btn {
-            width: 100%;
-            padding: 18px;
-            border-radius: 16px;
-            border: none;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            color: black;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .main-btn:hover { opacity: 0.9; transform: scale(0.98); }
-
-        /* SCRIPT BOX */
-        .script-box {
-            margin-top: 25px;
-            background: #000;
-            border-radius: 16px;
-            padding: 20px;
-            display: none;
-            animation: fadeIn 0.5s;
-        }
-
-        code {
-            font-family: 'Courier New', Courier, monospace;
-            color: var(--secondary);
-            font-size: 13px;
-            display: block;
-            white-space: pre-wrap;
-            word-break: break-all;
-        }
-
-        .warning-box {
-            background: #332200;
-            color: #FFCC00;
-            padding: 12px;
-            border-radius: 10px;
-            font-size: 12px;
-            margin-top: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .pix-box {
-            background: rgba(0,0,0,0.3);
-            border-radius: 12px;
-            padding: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            cursor: pointer;
-            border: 1px dashed var(--gold);
-            margin-top: 15px;
-            transition: background 0.3s;
-        }
-
-        .pix-box:hover { background: rgba(255,215,0,0.1); }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="LycanLoader: assistente local para downloads diretos e autorizados.">
+  <title>LycanLoader — downloads autorizados</title>
+  <style>
+    :root { color-scheme: dark; --bg:#0b1020; --panel:#151c31; --line:#2b3657; --text:#f3f6ff; --muted:#aeb9d6; --violet:#a78bfa; --cyan:#2dd4bf; --warning:#fbbf24; }
+    * { box-sizing:border-box } body { margin:0; min-height:100vh; font-family:Inter,Segoe UI,system-ui,sans-serif; background:radial-gradient(circle at 10% 0,#202b53 0,transparent 32rem),var(--bg); color:var(--text); }
+    main { width:min(760px,calc(100% - 32px)); margin:0 auto; padding:52px 0; }
+    header { text-align:center; margin-bottom:28px } .mark { width:64px;height:64px;display:grid;place-items:center;margin:0 auto 14px;border-radius:20px;background:linear-gradient(135deg,var(--violet),var(--cyan));color:#07121d;font-size:32px;box-shadow:0 18px 42px #0008 }
+    h1 { margin:0;font-size:clamp(2rem,6vw,3.1rem);letter-spacing:-.06em } .lead { max-width:590px;margin:14px auto 0;color:var(--muted);line-height:1.55 }
+    .card { background:#151c31e8;border:1px solid var(--line);border-radius:24px;padding:26px;box-shadow:0 15px 45px #0003;margin-top:18px } h2 { margin:0 0 8px;font-size:1.15rem } p { color:var(--muted);line-height:1.55 }
+    label { display:block;font-weight:700;margin:20px 0 8px } input { width:100%;padding:15px 16px;border-radius:13px;border:1px solid var(--line);background:#0b1020;color:var(--text);font:inherit } input:focus { outline:2px solid var(--violet);outline-offset:2px }
+    .check { display:flex;gap:10px;align-items:flex-start;margin:16px 0;color:var(--muted);font-size:.92rem;line-height:1.4 }.check input {width:18px;height:18px;margin-top:2px;accent-color:var(--violet)}
+    .row { display:flex;gap:10px;flex-wrap:wrap }.btn { border:0;border-radius:13px;padding:13px 17px;font:700 .95rem inherit;cursor:pointer;color:#07121d;background:linear-gradient(135deg,var(--violet),var(--cyan) ) }.btn.secondary {color:var(--text);background:#222c49;border:1px solid var(--line)} .btn:disabled {opacity:.45;cursor:not-allowed}
+    .notice { padding:14px 15px;border-radius:14px;background:#33290c;color:#fde68a;border:1px solid #72591a;font-size:.92rem;line-height:1.45 }.result { display:none;margin-top:20px }.result.show {display:block} pre {margin:12px 0 0;padding:16px;overflow:auto;border-radius:14px;background:#080c18;border:1px solid var(--line);color:#99f6e4;font:12px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap}
+    details { border-top:1px solid var(--line);padding-top:18px;margin-top:18px } summary {cursor:pointer;font-weight:700}.small {font-size:.86rem}.foot {text-align:center;margin-top:25px;color:#8491b4;font-size:.83rem}.ok {color:#99f6e4}.error {color:#fca5a5}
+  </style>
 </head>
 <body>
+  <main>
+    <header>
+      <div class="mark">⬇</div>
+      <h1>LycanLoader</h1>
+      <p class="lead">Um assistente simples para baixar <strong>arquivos que o site já oferece para download</strong> — sem capturar login, cookies, vídeo protegido ou burlar DRM.</p>
+    </header>
 
-    <div class="container">
-        <div class="logo-container">
-            <div class="logo-cloud">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="black">
-                    <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 4.5-2.24 4.5-5 0-2.64-2.14-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/>
-                </svg>
-            </div>
-            <h1>YT-DLP Mobile Web</h1>
-            <p class="subtitle">Prepare seu download em qualquer lugar</p>
-        </div>
+    <section class="card">
+      <h2>Baixar um arquivo direto</h2>
+      <p class="small">Cole uma URL direta de arquivo que você tem permissão para baixar, como um PDF, ZIP, áudio próprio ou material liberado pelo autor.</p>
+      <label for="downloadUrl">Link direto HTTPS</label>
+      <input id="downloadUrl" inputmode="url" autocomplete="off" spellcheck="false" placeholder="https://exemplo.com/arquivo.pdf">
+      <label class="check"><input id="rights" type="checkbox"><span>Confirmo que tenho direito de baixar este arquivo e que o link não aponta para conteúdo protegido por DRM ou acesso restrito.</span></label>
+      <div class="row">
+        <button id="browserDownload" class="btn" disabled>Baixar pelo navegador</button>
+        <button id="showCommands" class="btn secondary" disabled>Gerar comandos locais</button>
+      </div>
+      <div id="status" class="small" role="status"></div>
+      <div id="result" class="result">
+        <h2>Comandos para arquivo direto</h2>
+        <p class="small">Eles não enviam sua senha e não usam cookies. Use apenas onde o download for explicitamente permitido.</p>
+        <pre id="commands"></pre>
+        <button id="copy" class="btn secondary">Copiar comando</button>
+      </div>
+    </section>
 
-        <div class="card">
-            <input type="text" id="videoUrl" placeholder="Cole o link do vídeo aqui...">
+    <section class="card">
+      <h2>Entrar em um serviço</h2>
+      <p>Para serviços que exigem conta, abra o site oficial no seu navegador normal. Assim, sua senha e sua sessão ficam só com o serviço — o LycanLoader não vê nem armazena credenciais.</p>
+      <div class="row">
+        <button class="btn secondary" data-site="https://globoplay.globo.com/">Abrir Globoplay</button>
+        <button class="btn secondary" data-site="https://www.youtube.com/">Abrir YouTube</button>
+        <button class="btn secondary" data-site="https://drive.google.com/">Abrir Google Drive</button>
+      </div>
+      <p class="small">Se o serviço tiver botão oficial de download/offline, use-o. Conteúdo baixado para uso offline normalmente fica dentro do app oficial e não deve ser extraído.</p>
+    </section>
 
-            <div class="platform-selector">
-                <button class="platform-btn" onclick="setPlatform('win')" id="btn-win">Windows</button>
-                <button class="platform-btn" onclick="setPlatform('lin')" id="btn-lin">Linux</button>
-                <button class="platform-btn" onclick="setPlatform('and')" id="btn-and">Android</button>
-            </div>
+    <section class="card notice">
+      <strong>Limite importante:</strong> o LycanLoader não baixa streams protegidos, não extrai cookies, não simula sessões e não tenta contornar bloqueios, DRM ou termos de serviço. Para sites com login, o uso seguro é navegar normalmente e baixar somente o que o próprio site autoriza.
+    </section>
 
-            <button class="main-btn" onclick="generateScript()">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z"/></svg>
-                Gerar Guia de Instalação
-            </button>
+    <details>
+      <summary>Como saber se o link é direto?</summary>
+      <p>Um link direto normalmente abre ou inicia o download de um arquivo sem pedir login, player ou página intermediária. Se ele mostrar uma página de vídeo, um paywall ou uma tela de autenticação, não é um link direto para usar aqui.</p>
+    </details>
+    <div class="foot">Feito para downloads autorizados · <span class="ok">privacidade primeiro</span></div>
+  </main>
 
-            <div id="scriptResult" class="script-box">
-                <p style="margin-top:0; font-size: 14px; font-weight: bold; color: var(--secondary);">🛠️ Setup e Download</p>
+  <script>
+    const urlInput = document.querySelector('#downloadUrl');
+    const rights = document.querySelector('#rights');
+    const browserDownload = document.querySelector('#browserDownload');
+    const showCommands = document.querySelector('#showCommands');
+    const result = document.querySelector('#result');
+    const commands = document.querySelector('#commands');
+    const status = document.querySelector('#status');
 
-                <div style="position: relative;">
-                    <code id="scriptCode"></code>
-                    <button onclick="copyScript()" style="position: absolute; top: 0; right: 0; background: var(--surface); border: 1px solid #444; color: var(--secondary); padding: 5px 10px; border-radius: 8px; cursor: pointer; font-size: 10px;">Copiar</button>
-                </div>
-
-                <button class="main-btn" style="margin-top:15px; font-size: 14px; padding: 12px;" onclick="downloadFile()">
-                    Baixar Arquivo .bat / .sh
-                </button>
-
-                <div class="warning-box">
-                    <span>🛡️</span>
-                    <span><b>Dica:</b> Se o Windows bloquear, clique em "Copiar", abra o Bloco de Notas, cole e salve como <code>baixar.bat</code>.</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- SEÇÃO DOWNLOAD DO APP -->
-        <div class="card" style="border: 2px solid var(--primary); background: linear-gradient(180deg, #1e1e1e 0%, #121212 100%);">
-            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--primary)">
-                    <path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/>
-                </svg>
-                <h2 style="margin: 0; font-size: 20px;">Versão Mobile Disponível!</h2>
-            </div>
-            <p style="font-size: 14px; color: #AAA; margin-bottom: 20px;">Baixe vídeos diretamente no celular com um toque.</p>
-     <!-- SEÇÃO DOWNLOAD DO APP -->
-    <div class="card" style="border: 2px solid var(--primary); background: linear-gradient(180deg, #1e1e1e 0%, #121212 100%);">
-        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--primary)">
-                <path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/>
-            </svg>
-            <h2 style="margin: 0; font-size: 20px;">Versão Mobile Disponível!</h2>
-        </div>
-        <p style="font-size: 14px; color: #AAA; margin-bottom: 20px;">Baixe vídeos diretamente no celular com um toque.</p>
-        
-        <a href="https://github.com/wanderlycan/lycanloader/releases/download/v1.0.1/app-release-unsigned.apk" style="text-decoration: none;">
-            <button class="main-btn" style="margin-top: 10px; width: 100%;">
-                📥 Baixar APK Atualizado (v1.0.1)
-            </button>
-        </a>
-    </div>
-
-    <!-- SEÇÃO DOAÇÃO -->
-    <div class="card" style="border: 1px solid rgba(255,215,0,0.3); text-align: center;">
-
-        <!-- SEÇÃO DOAÇÃO (PROFESSOR GIRAFALES) -->
-        <div class="card" style="border: 1px solid rgba(255,215,0,0.3); text-align: center;">
-            <p style="font-size: 24px; margin: 0;">☕</p>
-            <h2 style="margin: 10px 0; font-size: 18px; color: var(--gold);">Pagar uma xícara de café?</h2>
-            <p style="font-size: 13px; color: #AAA; font-style: italic;">"Não seria muita incomodação?"</p>
-            <p style="font-size: 13px; color: #CCC; line-height: 1.5; margin-top: 10px;">
-                Se este projeto te ajudou, sinta-se à vontade para apoiar com qualquer valor. <b>Seria uma honra!</b>
-            </p>
-
-            <div class="pix-box" onclick="copyPix()">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--gold)">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 7h2v2h-2V7zm0 4h2v6h-2v-6z"/>
-                </svg>
-                <span style="font-weight: bold; font-family: monospace; letter-spacing: 1px;">16996804236</span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="#666"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
-            </div>
-            <p style="font-size: 10px; color: #666; margin-top: 8px;">Clique acima para copiar a chave PIX</p>
-        </div>
-
-        <div style="margin-top: 40px; color: #444; font-size: 12px; text-align: center;">
-            <p>&copy; 2026 YT-DLP Mobile - Projeto Educativo</p>
-        </div>
-    </div>
-
-    <script>
-        let currentPlatform = 'win';
-
-        window.onload = () => {
-            const ua = navigator.userAgent.toLowerCase();
-            if (ua.includes('android')) setPlatform('and');
-            else if (ua.includes('linux')) setPlatform('lin');
-            else setPlatform('win');
-        };
-
-        function setPlatform(p) {
-            currentPlatform = p;
-            document.querySelectorAll('.platform-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById('btn-' + p).classList.add('active');
-        }
-
-function generateScript() {
-    const url = document.getElementById('videoUrl').value.trim() || 'https://www.youtube.com/watch?v=mDFBTdToRmw';
-    const codeElem = document.getElementById('scriptCode');
-    let code = "";
-    
-    if (currentPlatform === 'win') {
-        code = `@echo off\n` +
-               `setlocal\n` +
-               `chcp 65001 >nul\n` +
-               `title YT-DLP Mobile Web - Setup e Download\n\n` +
-               `echo [INFO] Verificando dependencias no sistema...\n\n` +
-               `:: Verifica o yt-dlp e atualiza se ja existir\n` +
-               `where yt-dlp >nul 2>nul\n` +
-               `if %errorlevel% neq 0 (\n` +
-               `    echo [AVISO] yt-dlp nao encontrado. Instalando via winget...\n` +
-               `    winget install yt-dlp --accept-source-agreements --accept-package-agreements\n` +
-               `) else (\n` +
-               `    echo [INFO] yt-dlp ja instalado. Verificando atualizacoes...\n` +
-               `    yt-dlp -U\n` +
-               `)\n\n` +
-               `:: Verifica o ffmpeg\n` +
-               `where ffmpeg >nul 2>nul\n` +
-               `if %errorlevel% neq 0 (\n` +
-               `    echo [AVISO] ffmpeg nao encontrado. Instalando via winget...\n` +
-               `    winget install ffmpeg --accept-source-agreements --accept-package-agreements\n` +
-               `)\n\n` +
-               `echo.\n` +
-               `echo [INFO] Iniciando o download...\n` +
-               `yt-dlp "${url}"\n\n` +
-               `echo.\n` +
-               `echo ========================================================\n` +
-               `echo   Processo finalizado com sucesso! Pressione para sair.\n` +
-               `echo ========================================================\n` +
-               `pause >nul`;
-    } else if (currentPlatform === 'lin') {
-        code = `#!/bin/bash\n` +
-               `sudo apt update && sudo apt install yt-dlp ffmpeg -y\n` +
-               `yt-dlp "${url}"`;
-    } else {
-        code = `Use o App Mobile ou no Termux rode:\n` +
-               `pkg install python ffmpeg -y && pip install yt-dlp\n` +
-               `yt-dlp "${url}"`;
+    function validUrl() {
+      try {
+        const url = new URL(urlInput.value.trim());
+        return url.protocol === 'https:' || url.protocol === 'http:' ? url : null;
+      } catch { return null; }
     }
-    
-    codeElem.innerText = code;
-    document.getElementById('scriptResult').style.display = 'block';
-}
-
-        function downloadFile() {
-            const code = document.getElementById('scriptCode').innerText;
-            const blob = new Blob([code], {type: 'text/plain'});
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = currentPlatform === 'win' ? 'baixar.bat' : 'baixar.sh';
-            link.click();
-        }
-
-        function copyScript() {
-            navigator.clipboard.writeText(document.getElementById('scriptCode').innerText);
-            alert("Código do script copiado!");
-        }
-
-        function copyPix() {
-            navigator.clipboard.writeText("16996804236");
-            alert("Chave PIX copiada! Muito obrigado pela honra! ☕🙏");
-        }
-    </script>
+    function refresh() {
+      const enabled = Boolean(validUrl() && rights.checked);
+      browserDownload.disabled = !enabled;
+      showCommands.disabled = !enabled;
+      status.textContent = enabled ? 'Pronto para um download autorizado.' : '';
+      status.className = enabled ? 'small ok' : 'small';
+    }
+    function safeShellQuote(value) { return "'" + value.replaceAll("'", "'\\''") + "'"; }
+    function makeCommands(url) {
+      const link = url.toString();
+      const powershell = "Invoke-WebRequest -Uri '" + link.replaceAll("'", "''") + "' -OutFile (Split-Path '" + link.replaceAll("'", "''") + "' -Leaf)";
+      const bash = "curl --fail --location --remote-name --remote-header-name " + safeShellQuote(link);
+      return "Windows PowerShell\\n" + powershell + "\\n\\nLinux / macOS\\n" + bash;
+    }
+    urlInput.addEventListener('input', refresh); rights.addEventListener('change', refresh);
+    browserDownload.addEventListener('click', () => {
+      const url = validUrl(); if (!url) return;
+      const link = document.createElement('a'); link.href = url.href; link.rel = 'noopener'; link.target = '_blank'; link.click();
+      status.textContent = 'O link foi aberto em uma nova aba. Confirme o download no site de origem.';
+      status.className = 'small ok';
+    });
+    showCommands.addEventListener('click', () => {
+      const url = validUrl(); if (!url) return;
+      commands.textContent = makeCommands(url); result.classList.add('show');
+    });
+    document.querySelector('#copy').addEventListener('click', async () => {
+      await navigator.clipboard.writeText(commands.textContent);
+      status.textContent = 'Comando copiado.'; status.className = 'small ok';
+    });
+    document.querySelectorAll('[data-site]').forEach(button => button.addEventListener('click', () => {
+      window.open(button.dataset.site, '_blank', 'noopener,noreferrer');
+    }));
+    refresh();
+  </script>
 </body>
 </html>
