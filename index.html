@@ -34,7 +34,6 @@
       <input id="downloadUrl" inputmode="url" autocomplete="off" spellcheck="false" placeholder="https://www.youtube.com/watch?v=...">
       <label class="check"><input id="rights" type="checkbox"><span>Tenho permissão para baixar este conteúdo.</span></label>
       <div class="row">
-        <button id="browserDownload" class="btn" disabled>Abrir link</button>
         <button id="showCommands" class="btn secondary" disabled>Gerar código para Windows</button>
       </div>
       <div id="status" class="small" role="status"></div>
@@ -54,7 +53,6 @@
   <script>
     const urlInput = document.querySelector('#downloadUrl');
     const rights = document.querySelector('#rights');
-    const browserDownload = document.querySelector('#browserDownload');
     const showCommands = document.querySelector('#showCommands');
     const result = document.querySelector('#result');
     const commands = document.querySelector('#commands');
@@ -68,7 +66,6 @@
     }
     function refresh() {
       const enabled = Boolean(validUrl() && rights.checked);
-      browserDownload.disabled = !enabled;
       showCommands.disabled = !enabled;
       status.textContent = enabled ? 'Pronto para um download autorizado.' : '';
       status.className = enabled ? 'small ok' : 'small';
@@ -76,12 +73,6 @@
       result.classList.toggle('show', enabled);
     }
     urlInput.addEventListener('input', refresh); rights.addEventListener('change', refresh);
-    browserDownload.addEventListener('click', () => {
-      const url = validUrl(); if (!url) return;
-      const link = document.createElement('a'); link.href = url.href; link.rel = 'noopener'; link.target = '_blank'; link.click();
-      status.textContent = 'O link foi aberto em uma nova aba. Confirme o download no site de origem.';
-      status.className = 'small ok';
-    });
     showCommands.addEventListener('click', () => {
       const url = validUrl(); if (!url) return;
       commands.textContent = makeCommands(url); result.classList.add('show');
